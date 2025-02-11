@@ -1,0 +1,31 @@
+name: Publish Website to CPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  FTP-Deploy-Action:
+    name: Deploy to cPanel via FTP
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Vérifiez le code source
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Étape 2 : Construire l'application
+      - name: Install and build
+        run: |
+          npm install --legacy-peer-deps
+          npm run build
+
+      # Étape 3 : Déployer les fichiers sur le serveur via FTP
+      - name: FTP Deploy Action
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ftp.wealthfunding.co    # Adresse du serveur FTP
+          username: wealth_fund@wealthfunding.co # Nom d'utilisateur FTP
+          password: CUZf-!vx??UO # Mot de passe FTP
+          local-dir: ./dist/                   # Répertoire local à téléverser

@@ -1,0 +1,11 @@
+# Active la réécriture d'URL
+RewriteEngine On
+
+# Si la requête ne correspond pas à un fichier ou un dossier existant, rediriger vers index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ /index.html [L]
+
+# Rediriger HTTP vers HTTPS (si vous utilisez SSL)
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
